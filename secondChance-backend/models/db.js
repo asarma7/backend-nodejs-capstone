@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 let url = `${process.env.MONGO_URL}`;
 
 let dbInstance = null;
-const dbName = `${process.env.MONGO_DB}`;
+const dbName = "secondChance";
 
 async function connectToDatabase() {
     if (dbInstance){
@@ -19,7 +19,7 @@ async function connectToDatabase() {
     await client.connect();
 
     // Task 2: Connect to database giftDB and store in variable dbInstance
-    dbInstance = client.db("giftDB");
+    dbInstance = client.db(dbName);
 
     // Task 3: Return database instance
     return dbInstance;

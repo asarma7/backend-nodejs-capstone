@@ -40,7 +40,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', upload.single('file'), async(req, res,next) => {
     try {
 
-        const db = connectToDatabase();
+        const db = await connectToDatabase();
         const collection = db.collection("secondChanceItems");
         let secondChanceItem = req.body;
         const lastItemQuery = await collection.find().sort({'id': -1}).limit(1);
@@ -62,7 +62,7 @@ router.post('/', upload.single('file'), async(req, res,next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const id = req.params.id;
-        const db = connectToDatabase();
+        const db = await connectToDatabase();
         const collection = db.collection("secondChanceItems");
         const secondChanceItem = collection.findOne({id: id});
         if (secondChanceItem) {
@@ -80,7 +80,7 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async(req, res,next) => {
     try {
         const id = req.params.id;
-        const db = connectToDatabase();
+        const db = await connectToDatabase();
         const collection = db.collection("secondChanceItems");
         const secondChanceItem = collection.findOne({id: id});
         if (!secondChanceItem) {
@@ -113,7 +113,7 @@ router.put('/:id', async(req, res,next) => {
 router.delete('/:id', async(req, res,next) => {
     try {
         const id = req.params.id;
-        const db = connectToDatabase();
+        const db = await connectToDatabase();
         const collection = db.collection("secondChanceItems");
         const secondChanceItem = collection.findOne({id: id});
         if (!secondChanceItem) {
