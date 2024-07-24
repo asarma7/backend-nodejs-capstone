@@ -4,20 +4,20 @@ const jwt = require('jsonwebtoken')
 const connectToDatabase = require('../models/db')
 const router = express.Router()
 const dotenv = require('dotenv')
-const pino = require('pino')  // Import Pino logger
+const pino = require('pino')
 
-const { body, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 
-const logger = pino() // Create a Pino logger instance
+const logger = pino()
 
 dotenv.config()
 const JWT_SECRET = process.env.JWT_SECRET
 
 router.post('/register', async (req, res) => {
     try {
-      const db = await connectToDatabase()
-      const collection = db.collection('users')
-      const existingEmail = await collection.findOne({ email: req.body.email })
+        const db = await connectToDatabase()
+        const collection = db.collection('users')
+        const existingEmail = await collection.findOne({ email: req.body.email })
 
         if (existingEmail) {
             logger.error('Email id already exists')
