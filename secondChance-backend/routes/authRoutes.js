@@ -33,13 +33,13 @@ router.post('/register', async (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       password: hash,
-      createdAt: new Date(),
+      createdAt: new Date()
     })
 
     const payload = {
       user: {
-        id: newUser.insertedId,
-      },
+        id: newUser.insertedId
+      }
     }
 
     const authtoken = jwt.sign(payload, JWT_SECRET)
@@ -58,15 +58,15 @@ router.post('/login', async (req, res) => {
     const theUser = await collection.findOne({ email: req.body.email })
 
     if (theUser) {
-      let result = await bcryptjs.compare(req.body.password, theUser.password)
-      if(!result) {
+      const result = await bcryptjs.compare(req.body.password, theUser.password)
+      if (!result) {
         logger.error('Passwords do not match')
         return res.status(404).json({ error: 'Wrong pasword' })
       }
-      let payload = {
+      const payload = {
         user: {
-          id: theUser._id.toString(),
-        },
+          id: theUser._id.toString()
+        }
       }
 
       const userName = theUser.firstName
@@ -122,8 +122,8 @@ router.put('/update', async (req, res) => {
 
     const payload = {
       user: {
-        id: updatedUser._id.toString(),
-      },
+        id: updatedUser._id.toString()
+      }
     }
 
     const authtoken = jwt.sign(payload, JWT_SECRET)
@@ -135,4 +135,4 @@ router.put('/update', async (req, res) => {
     return res.status(500).send('Internal Server Error')
   }
 })
-module.exports = router;
+module.exports = router
